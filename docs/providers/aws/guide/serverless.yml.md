@@ -136,14 +136,15 @@ provider:
     apiGateway: true
     lambda: true # Optional, can be true (true equals 'Active'), 'Active' or 'PassThrough'
   logs:
-    restApi: # Optional configuration which specifies if API Gateway logs are used. This can either be set to true to use defaults, or configured via subproperties.
+    restApi: # Optional configuration which specifies if API Gateway logs are used. This can either be set to `true` to use defaults, or configured via subproperties.
       accessLogging: true # Optional configuration which enables or disables access logging. Defaults to true.
       format: 'requestId: $context.requestId' # Optional configuration which specifies the log format to use for access logging.
       executionLogging: true # Optional configuration which enables or disables execution logging. Defaults to true.
       level: INFO # Optional configuration which specifies the log level to use for execution logging. May be set to either INFO or ERROR.
       fullExecutionData: true # Optional configuration which specifies whether or not to log full requests/responses for execution logging. Defaults to true.
       role: arn:aws:iam::123456:role # Optional IAM role for ApiGateway to use when managing CloudWatch Logs
-    websocket: true # Optional configuration which specifies if Websockets logs are used
+    websocket: # Optional configuration which specifies if Websocket logs are used. This can either be set to `true` to use defaults, or configured via subproperties.
+      level: INFO # Optional configuration which specifies the log level to use for execution logging. May be set to either INFO or ERROR.
     frameworkLambda: true # Optional, whether to write CloudWatch logs for custom resource lambdas as added by the framework
 
 package: # Optional deployment packaging configuration
@@ -164,6 +165,7 @@ functions:
     description: My function # The description of your function.
     memorySize: 512 # memorySize for this specific function.
     reservedConcurrency: 5 # optional, reserved concurrency limit for this function. By default, AWS uses account concurrency limit
+    provisionedConcurrency: 3 # optional, Count of provisioned lambda instances
     runtime: nodejs12.x # Runtime for this specific function. Overrides the default which is set on the provider level
     timeout: 10 # Timeout for this specific function.  Overrides the default set above.
     role: arn:aws:iam::XXXXXX:role/role # IAM role which will be used for this function
